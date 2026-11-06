@@ -1,0 +1,115 @@
+{
+  "_comment": "Paths are relative to the root of this release. 'bytes' runs on a laptop; 'censoring' and 'tempering' need the teacher on a GPU with about 20 GB free, because both are defined over the full 151,936-way distribution.",
+  "report_dir": "results",
+  "defaults": {
+    "device": "cuda",
+    "dataset": "gsm8k",
+    "tau": 0.0335,
+    "vocab_size": 151936
+  },
+  "analyses": {
+    "bytes": {
+      "store": "artifacts/store4b.npz",
+      "widths": [
+        1,
+        5,
+        20,
+        50
+      ],
+      "student_half": 3737,
+      "measure_subset": "s11",
+      "subsets": [
+        {
+          "path": "artifacts/subsets/v2_subset_s11.json",
+          "label": "s11"
+        },
+        {
+          "path": "artifacts/subsets/v2_subset_s22.json",
+          "label": "s22"
+        },
+        {
+          "path": "artifacts/subsets/v2_subset_s1234.json",
+          "label": "s1234"
+        }
+      ],
+      "corpus_bytes": {
+        "_note": "Fallback for machines without the datasets package. Measured over the whole GSM8K train split by keeping the printable bytes of the cached arrow file, which is 98.6% of it; this is what produced the figures in the paper. With datasets installed the script measures the text directly instead and says so in the report.",
+        "raw": 3911794,
+        "compressed": 1388327,
+        "sequences": 7473
+      }
+    },
+    "tempering": {
+      "teacher": "runs/teacher_gsm8k",
+      "tokenizer": "Qwen/Qwen3-4B-Base",
+      "dataset": "gsm8k",
+      "pool": "artifacts/subsets/split_B.json",
+      "k": 5,
+      "temperatures": [
+        1.0,
+        2.0,
+        4.0
+      ],
+      "max_sequences": 24,
+      "max_positions": 1500
+    },
+    "censoring_math": {
+      "teacher": "runs/teacher_math",
+      "tokenizer": "Qwen/Qwen3-4B-Base",
+      "dataset": "math",
+      "pool": "artifacts/subsets/split_B_math.json",
+      "widths": [
+        1,
+        5,
+        20,
+        50,
+        200,
+        1000
+      ],
+      "temperatures": [
+        1.0,
+        2.0,
+        4.0
+      ],
+      "max_sequences": 48,
+      "max_positions": 1500,
+      "kind": "censoring"
+    },
+    "censoring_gsm8k": {
+      "kind": "censoring",
+      "_note": "The width table reports GSM8K accuracy, so the divergence it is compared against has to come from the GSM8K teacher. Measured on both teachers to show the pattern does not depend on the corpus.",
+      "teacher": "runs/teacher_gsm8k",
+      "tokenizer": "Qwen/Qwen3-4B-Base",
+      "dataset": "gsm8k",
+      "pool": "artifacts/subsets/split_B.json",
+      "widths": [
+        1,
+        5,
+        20,
+        50,
+        200,
+        1000
+      ],
+      "temperatures": [
+        1.0,
+        2.0,
+        4.0
+      ],
+      "max_sequences": 48,
+      "max_positions": 1500
+    },
+    "export": {
+      "kind": "export",
+      "_note": "Writes the artifacts the size table measures, so the released package contains the objects the paper describes and not only the archive they were cut from.",
+      "store": "artifacts/store4b.npz",
+      "subset": "artifacts/subsets/v2_subset_s11.json",
+      "dataset": "gsm8k",
+      "output_dir": "artifacts/published",
+      "widths": [
+        1,
+        5
+      ],
+      "corpus_mb": 0.694
+    }
+  }
+}

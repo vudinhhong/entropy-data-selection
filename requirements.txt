@@ -1,0 +1,10 @@
+# Two tiers. Checking the paper's numbers needs almost nothing; re-running the
+# experiments needs a GPU.
+#
+#   pip install -r requirements.txt            # checking and plotting, CPU
+#   pip install -r requirements-gpu.txt        # re-running the experiments
+#
+# code/17_reproduce/verify_paper_numbers.py needs neither: standard library only.
+
+numpy==2.3.4
+matplotlib==3.11.2

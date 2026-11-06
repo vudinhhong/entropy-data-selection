@@ -1,0 +1,1 @@
+{"points": [{"tag": "v2_s06_lo_K5_s11", "subset": "artifacts/v2_subset_s11.json", "store": "artifacts/store4b.npz", "student": "Qwen/Qwen3-0.6B-Base", "K": 5, "tau": 0.000632929615676403, "gate": "low", "lam": 1.0, "rho_target": 0.35, "epochs": 2, "lora": 32, "lr": 0.0002, "seed": 11, "sub": "s11"}], "V": 151936}

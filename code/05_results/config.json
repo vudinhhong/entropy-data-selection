@@ -1,0 +1,1024 @@
+{
+  "_comment": "Every table names the exact result files behind it. Tags are listed subset-first in the order s11, s22, s1234, and the order has to match across arms because the tests are paired by subset.",
+  "results_dir": "results/grid",
+  "report_dir": "results",
+  "teacher": {
+    "gsm8k": 78.09,
+    "math": 45.0
+  },
+  "eval_size": {
+    "gsm8k": 1319,
+    "math": 500,
+    "ape210k": 1785,
+    "ecqa": 2194,
+    "kk": 700
+  },
+  "cells": {
+    "GSM8K/Qwen2-0.5B": {
+      "dataset": "gsm8k",
+      "base": 11.83,
+      "full_corpus": 30.48,
+      "arms": {
+        "text": [
+          "bac_q2_05_txt_s11",
+          "bac_q2_05_txt_s22",
+          "bac_q2_05_txt_s1234"
+        ],
+        "artifact": [
+          "bac_q2_05_hi_s11",
+          "bac_q2_05_hi_s22",
+          "bac_q2_05_hi_s1234"
+        ],
+        "lowgate": [
+          "bac_q2_05_lo_s11",
+          "bac_q2_05_lo_s22",
+          "bac_q2_05_lo_s1234"
+        ]
+      }
+    },
+    "GSM8K/Qwen2-1.5B": {
+      "dataset": "gsm8k",
+      "base": 18.65,
+      "full_corpus": 48.07,
+      "arms": {
+        "text": [
+          "bac_q2_15_txt_s11",
+          "bac_q2_15_txt_s22",
+          "bac_q2_15_txt_s1234"
+        ],
+        "artifact": [
+          "bac_q2_15_hi_s11",
+          "bac_q2_15_hi_s22",
+          "bac_q2_15_hi_s1234"
+        ],
+        "lowgate": [
+          "bac_q2_15_lo_s11",
+          "bac_q2_15_lo_s22",
+          "bac_q2_15_lo_s1234"
+        ]
+      }
+    },
+    "GSM8K/Qwen1.5-1.8B": {
+      "dataset": "gsm8k",
+      "base": 24.49,
+      "full_corpus": 34.27,
+      "arms": {
+        "text": [
+          "v3_q15_18_txt_s11",
+          "v3_q15_18_txt_s22",
+          "v3_q15_18_txt_s1234"
+        ],
+        "artifact": [
+          "v3_q15_18_hi_K5_s11",
+          "v3_q15_18_hi_K5_s22",
+          "v3_q15_18_hi_K5_s1234"
+        ],
+        "lowgate": [
+          "v3_q15_18_lo_K5_s11",
+          "v3_q15_18_lo_K5_s22",
+          "v3_q15_18_lo_K5_s1234"
+        ]
+      }
+    },
+    "MATH/Qwen2-1.5B": {
+      "dataset": "math",
+      "base": 11.4,
+      "full_corpus": 16.2,
+      "arms": {
+        "text": [
+          "m2_q2_15_txt_s11",
+          "m2_q2_15_txt_s22",
+          "m2_q2_15_txt_s1234"
+        ],
+        "artifact": [
+          "m2_q2_15_hi_K5_s11",
+          "m2_q2_15_hi_K5_s22",
+          "m2_q2_15_hi_K5_s1234"
+        ],
+        "lowgate": [
+          "m2_q2_15_lo_K5_s11",
+          "m2_q2_15_lo_K5_s22",
+          "m2_q2_15_lo_K5_s1234"
+        ]
+      }
+    },
+    "MATH/Qwen3-0.6B": {
+      "dataset": "math",
+      "base": 17.8,
+      "full_corpus": 23.2,
+      "arms": {
+        "text": [
+          "v2m_s06_txt_s11",
+          "v2m_s06_txt_s22",
+          "v2m_s06_txt_s1234"
+        ],
+        "artifact": [
+          "v2m_s06_hi_K5_s11",
+          "v2m_s06_hi_K5_s22",
+          "v2m_s06_hi_K5_s1234"
+        ],
+        "lowgate": [
+          "v2m_s06_lo_K5_s11",
+          "v2m_s06_lo_K5_s22",
+          "v2m_s06_lo_K5_s1234"
+        ]
+      }
+    },
+    "MATH/Qwen3-1.7B": {
+      "dataset": "math",
+      "base": 20.4,
+      "full_corpus": 33.2,
+      "arms": {
+        "text": [
+          "v2m_s17_txt_s11",
+          "v2m_s17_txt_s22",
+          "v2m_s17_txt_s1234"
+        ],
+        "artifact": [
+          "v2m_s17_hi_K5_s11",
+          "v2m_s17_hi_K5_s22",
+          "v2m_s17_hi_K5_s1234"
+        ],
+        "lowgate": [
+          "v2m_s17_lo_K5_s11",
+          "v2m_s17_lo_K5_s22",
+          "v2m_s17_lo_K5_s1234"
+        ]
+      }
+    },
+    "GSM8K/Qwen3-0.6B": {
+      "dataset": "gsm8k",
+      "base": 50.27,
+      "full_corpus": 50.8,
+      "arms": {
+        "text": [
+          "disq_q3_06_txt_s11",
+          "disq_q3_06_txt_s22",
+          "disq_q3_06_txt_s1234"
+        ],
+        "artifact": [
+          "disq_q3_06_hi_K5_s11",
+          "disq_q3_06_hi_K5_s22",
+          "disq_q3_06_hi_K5_s1234"
+        ]
+      }
+    },
+    "MATH/Qwen2-0.5B": {
+      "_note": "excluded on the criterion; no arms were run, so only the qualification row exists",
+      "dataset": "math",
+      "base": 5.2,
+      "full_corpus": 9.2,
+      "arms": {}
+    },
+    "GSM8K/Qwen3-1.7B": {
+      "dataset": "gsm8k",
+      "base": 66.87,
+      "full_corpus": 66.11,
+      "arms": {
+        "text": [
+          "disq_q3_17_txt_s11",
+          "disq_q3_17_txt_s22",
+          "disq_q3_17_txt_s1234"
+        ],
+        "artifact": [
+          "disq_q3_17_hi_K5_s11",
+          "disq_q3_17_hi_K5_s22",
+          "disq_q3_17_hi_K5_s1234"
+        ]
+      }
+    }
+  },
+  "comparisons": {
+    "sham": {
+      "description": "Placebo stores on GSM8K / Qwen1.5-1.8B: does the benefit need the teacher's actual distribution",
+      "baseline": "text",
+      "arms": {
+        "text": [
+          "v3_q15_18_txt_s11",
+          "v3_q15_18_txt_s22",
+          "v3_q15_18_txt_s1234"
+        ],
+        "real": [
+          "v3_q15_18_hi_K5_s11",
+          "v3_q15_18_hi_K5_s22",
+          "v3_q15_18_hi_K5_s1234"
+        ],
+        "flat": [
+          "sham_deu_s11",
+          "sham_deu_s22",
+          "sham_deu_s1234"
+        ],
+        "shuffled": [
+          "sham_tronid_s11",
+          "sham_tronid_s22",
+          "sham_tronid_s1234"
+        ]
+      }
+    },
+    "width": {
+      "description": "Stored entries per position, fiftyfold range, same store sliced four ways",
+      "baseline": "text",
+      "arms": {
+        "text": [
+          "v3_q15_18_txt_s11",
+          "v3_q15_18_txt_s22",
+          "v3_q15_18_txt_s1234"
+        ],
+        "K1": [
+          "k1_K1_T1_l10_s11",
+          "k1_K1_T1_l10_s22",
+          "k1_K1_T1_l10_s1234"
+        ],
+        "K5": [
+          "v3_q15_18_hi_K5_s11",
+          "v3_q15_18_hi_K5_s22",
+          "v3_q15_18_hi_K5_s1234"
+        ],
+        "K20": [
+          "v3f_q15_18_q_K20_T1_l10",
+          "k3_K20_T1_l10_s22",
+          "k3_K20_T1_l10_s1234"
+        ],
+        "K50": [
+          "v3f_q15_18_q_K50_T1_l10",
+          "k3_K50_T1_l10_s22",
+          "k3_K50_T1_l10_s1234"
+        ]
+      }
+    },
+    "temperature": {
+      "description": "Distillation temperature at K=5, lambda=1; one variable changed",
+      "baseline": "T1",
+      "arms": {
+        "T1": [
+          "v3_q15_18_hi_K5_s11",
+          "v3_q15_18_hi_K5_s22",
+          "v3_q15_18_hi_K5_s1234"
+        ],
+        "T2": [
+          "t2_K5_l10_s11",
+          "t2_K5_l10_s22",
+          "t2_K5_l10_s1234"
+        ]
+      }
+    },
+    "gate_placement": {
+      "description": "Where the gate is put, and how much of the corpus it passes. GSM8K / Qwen1.5-1.8B, K=5",
+      "baseline": "text",
+      "arms": {
+        "text": [
+          "v3_q15_18_txt_s11",
+          "v3_q15_18_txt_s22",
+          "v3_q15_18_txt_s1234"
+        ],
+        "random gate": [
+          "rand_q15_18_r28_s11",
+          "rand_q15_18_r28_s22",
+          "rand_q15_18_r28_s1234"
+        ],
+        "entropy 10%": [
+          "tau_q15_18_rho10_s11",
+          "tau_q15_18_rho10_s22",
+          "tau_q15_18_rho10_s1234"
+        ],
+        "entropy 29%": [
+          "tau_q15_18_rho30_s11",
+          "tau_q15_18_rho30_s22",
+          "tau_q15_18_rho30_s1234"
+        ],
+        "entropy 51%": [
+          "tau_q15_18_rho50_s11",
+          "tau_q15_18_rho50_s22",
+          "tau_q15_18_rho50_s1234"
+        ],
+        "entropy 70%": [
+          "tau_q15_18_rho70_s11",
+          "tau_q15_18_rho70_s22",
+          "tau_q15_18_rho70_s1234"
+        ],
+        "no gate": [
+          "tau_q15_18_rho100_s11",
+          "tau_q15_18_rho100_s22",
+          "tau_q15_18_rho100_s1234"
+        ]
+      }
+    },
+    "label_smoothing": {
+      "description": "A softened one-hot label carrying the teacher's entropy and nothing else",
+      "baseline": "text",
+      "arms": {
+        "text": [
+          "v3_q15_18_txt_s11",
+          "v3_q15_18_txt_s22",
+          "v3_q15_18_txt_s1234"
+        ],
+        "entropy-matched smoothing": [
+          "smooth_q15_18_matched_s11",
+          "smooth_q15_18_matched_s22",
+          "smooth_q15_18_matched_s1234"
+        ],
+        "real store": [
+          "v3_q15_18_hi_K5_s11",
+          "v3_q15_18_hi_K5_s22",
+          "v3_q15_18_hi_K5_s1234"
+        ]
+      }
+    },
+    "baselines_cell1": {
+      "description": "What the artifact is measured against. GSM8K / Qwen1.5-1.8B",
+      "baseline": "text",
+      "arms": {
+        "text": [
+          "txtchk_q15_18_text_s11",
+          "txtchk_q15_18_text_s22",
+          "txtchk_q15_18_text_s1234"
+        ],
+        "artifact K=5": [
+          "v3_q15_18_hi_K5_s11",
+          "v3_q15_18_hi_K5_s22",
+          "v3_q15_18_hi_K5_s1234"
+        ],
+        "sequence-level KD": [
+          "sk1_q15_18_text_s11",
+          "sk1_q15_18_text_s22",
+          "sk1_q15_18_text_s1234"
+        ],
+        "full-logit KD": [
+          "fullkd_q15_18_s11",
+          "fullkd_q15_18_s22",
+          "fullkd_q15_18_s1234"
+        ]
+      }
+    },
+    "code_path_controls": {
+      "description": "The same data through three training paths; the spread is the code, not the method",
+      "baseline": "original code",
+      "arms": {
+        "original code": [
+          "v3_q15_18_txt_s11",
+          "v3_q15_18_txt_s22",
+          "v3_q15_18_txt_s1234"
+        ],
+        "shared trainer": [
+          "txtchk_q15_18_text_s11",
+          "txtchk_q15_18_text_s22",
+          "txtchk_q15_18_text_s1234"
+        ],
+        "baseline runner": [
+          "refctl_q15_18_s11",
+          "refctl_q15_18_s22",
+          "refctl_q15_18_s1234"
+        ]
+      }
+    },
+    "two_corpora": {
+      "description": "The same pipeline on the reference answers and on answers the teacher wrote",
+      "baseline": "reference text",
+      "arms": {
+        "reference text": [
+          "txtchk_q15_18_text_s11",
+          "txtchk_q15_18_text_s22",
+          "txtchk_q15_18_text_s1234"
+        ],
+        "reference + logits": [
+          "v3_q15_18_hi_K5_s11",
+          "v3_q15_18_hi_K5_s22",
+          "v3_q15_18_hi_K5_s1234"
+        ],
+        "teacher text": [
+          "sk1_q15_18_text_s11",
+          "sk1_q15_18_text_s22",
+          "sk1_q15_18_text_s1234"
+        ],
+        "teacher text + logits": [
+          "seqlog_q15_18_K5_s11",
+          "seqlog_q15_18_K5_s22",
+          "seqlog_q15_18_K5_s1234"
+        ]
+      }
+    },
+    "scale_on_written_text": {
+      "description": "Ten times more teacher-written text, three training seeds",
+      "baseline": "teacher text 10%",
+      "arms": {
+        "teacher text 10%": [
+          "seqkd_q15_18_s11",
+          "seqkd_q15_18_s22",
+          "seqkd_q15_18_s1234"
+        ],
+        "teacher text 100%": [
+          "seqkdF_q15_18_r11",
+          "seqkdF_q15_18_r22",
+          "seqkdF_q15_18_r1234"
+        ],
+        "100% + logits": [
+          "seqlogF_q15_18_K5_r11",
+          "seqlogF_q15_18_K5_r22",
+          "seqlogF_q15_18_K5_r1234"
+        ]
+      }
+    },
+    "layer2_selection": {
+      "description": "Choosing sequences by a teacher-derived score, at a matched token budget",
+      "baseline": "random, artifact",
+      "arms": {
+        "random, text": [
+          "sel_q15_18_text_rand11",
+          "sel_q15_18_text_rand22",
+          "sel_q15_18_text_rand1234"
+        ],
+        "random, artifact": [
+          "sel_q15_18_artifact_rand11",
+          "sel_q15_18_artifact_rand22",
+          "sel_q15_18_artifact_rand1234"
+        ],
+        "gated_H, text": [
+          "selg_q15_18_text_g11",
+          "selg_q15_18_text_g22",
+          "selg_q15_18_text_g1234"
+        ],
+        "gated_H, artifact": [
+          "selg_q15_18_artifact_g11",
+          "selg_q15_18_artifact_g22",
+          "selg_q15_18_artifact_g1234"
+        ],
+        "H_total, artifact": [
+          "sel_q15_18_artifact_H_total11",
+          "sel_q15_18_artifact_H_total22",
+          "sel_q15_18_artifact_H_total1234"
+        ],
+        "length, artifact": [
+          "sel_q15_18_artifact_length11",
+          "sel_q15_18_artifact_length22",
+          "sel_q15_18_artifact_length1234"
+        ]
+      }
+    },
+    "mechanism_cell_two": {
+      "description": "The mechanism controls repeated on GSM8K / Qwen2-1.5B",
+      "baseline": "text",
+      "arms": {
+        "text": [
+          "bac_q2_15_txt_s11",
+          "bac_q2_15_txt_s22",
+          "bac_q2_15_txt_s1234"
+        ],
+        "artifact K=5": [
+          "bac_q2_15_hi_s11",
+          "bac_q2_15_hi_s22",
+          "bac_q2_15_hi_s1234"
+        ],
+        "K=1": [
+          "mech2_q2_15_K1_s11",
+          "mech2_q2_15_K1_s22",
+          "mech2_q2_15_K1_s1234"
+        ],
+        "K=50": [
+          "mech2_q2_15_K50_s11",
+          "mech2_q2_15_K50_s22",
+          "mech2_q2_15_K50_s1234"
+        ],
+        "flat sham": [
+          "mech2_q2_15_flat_s11",
+          "mech2_q2_15_flat_s22",
+          "mech2_q2_15_flat_s1234"
+        ],
+        "shuffled sham": [
+          "mech2_q2_15_shuffled_s11",
+          "mech2_q2_15_shuffled_s22",
+          "mech2_q2_15_shuffled_s1234"
+        ],
+        "label smoothing": [
+          "mech2_q2_15_smooth_s11",
+          "mech2_q2_15_smooth_s22",
+          "mech2_q2_15_smooth_s1234"
+        ],
+        "random gate": [
+          "mech2_q2_15_rand_s11",
+          "mech2_q2_15_rand_s22",
+          "mech2_q2_15_rand_s1234"
+        ]
+      }
+    },
+    "selection_reference_cell1": {
+      "description": "D split into the selected tenth and the rest, reference answers, GSM8K / Qwen1.5-1.8B",
+      "baseline": "A2s (same size, from the rest)",
+      "arms": {
+        "A (selected tenth)": [
+          "pr_q15_18_text_A_11",
+          "pr_q15_18_text_A_22",
+          "pr_q15_18_text_A_1234"
+        ],
+        "A, with logits": [
+          "pr_q15_18_artifact_A_11",
+          "pr_q15_18_artifact_A_22",
+          "pr_q15_18_artifact_A_1234"
+        ],
+        "A2 (the rest, nine tenths)": [
+          "pr_q15_18_text_A2_11",
+          "pr_q15_18_text_A2_22",
+          "pr_q15_18_text_A2_1234"
+        ],
+        "A2s (same size, from the rest)": [
+          "pr_q15_18_text_A2s_11",
+          "pr_q15_18_text_A2s_22",
+          "pr_q15_18_text_A2s_1234"
+        ],
+        "A token-matched": [
+          "pr_q15_18_text_Atok_11",
+          "pr_q15_18_text_Atok_22",
+          "pr_q15_18_text_Atok_1234"
+        ]
+      }
+    },
+    "selection_written_cell1": {
+      "description": "the same split on the answers the teacher wrote",
+      "baseline": "A2s (same size, from the rest)",
+      "arms": {
+        "A (selected tenth)": [
+          "pk_q15_18_text_A_11",
+          "pk_q15_18_text_A_22",
+          "pk_q15_18_text_A_1234"
+        ],
+        "A, with logits": [
+          "pk_q15_18_artifact_A_11",
+          "pk_q15_18_artifact_A_22",
+          "pk_q15_18_artifact_A_1234"
+        ],
+        "A2 (the rest, nine tenths)": [
+          "pk_q15_18_text_A2_11",
+          "pk_q15_18_text_A2_22",
+          "pk_q15_18_text_A2_1234"
+        ],
+        "A2s (same size, from the rest)": [
+          "pk_q15_18_text_A2s_11",
+          "pk_q15_18_text_A2s_22",
+          "pk_q15_18_text_A2s_1234"
+        ]
+      }
+    },
+    "selection_reference_cell2": {
+      "description": "the same split on GSM8K / Qwen2-1.5B",
+      "baseline": "A2s",
+      "arms": {
+        "A": [
+          "p2r_q2_15_text_A_11",
+          "p2r_q2_15_text_A_22",
+          "p2r_q2_15_text_A_1234"
+        ],
+        "A, with logits": [
+          "p2r_q2_15_artifact_A_11",
+          "p2r_q2_15_artifact_A_22",
+          "p2r_q2_15_artifact_A_1234"
+        ],
+        "A2": [
+          "p2r_q2_15_text_A2_11",
+          "p2r_q2_15_text_A2_22",
+          "p2r_q2_15_text_A2_1234"
+        ],
+        "A2s": [
+          "p2r_q2_15_text_A2s_11",
+          "p2r_q2_15_text_A2s_22",
+          "p2r_q2_15_text_A2s_1234"
+        ],
+        "A token-matched": [
+          "p2r_q2_15_text_Atok_11",
+          "p2r_q2_15_text_Atok_22",
+          "p2r_q2_15_text_Atok_1234"
+        ]
+      }
+    },
+    "selection_reference_math": {
+      "description": "the same split on MATH / Qwen2-1.5B",
+      "baseline": "A2s",
+      "arms": {
+        "A": [
+          "pmr_q2_15_text_A_11",
+          "pmr_q2_15_text_A_22",
+          "pmr_q2_15_text_A_1234"
+        ],
+        "A, with logits": [
+          "pmr_q2_15_artifact_A_11",
+          "pmr_q2_15_artifact_A_22",
+          "pmr_q2_15_artifact_A_1234"
+        ],
+        "A2": [
+          "pmr_q2_15_text_A2_11",
+          "pmr_q2_15_text_A2_22",
+          "pmr_q2_15_text_A2_1234"
+        ],
+        "A2s": [
+          "pmr_q2_15_text_A2s_11",
+          "pmr_q2_15_text_A2s_22",
+          "pmr_q2_15_text_A2s_1234"
+        ],
+        "A token-matched": [
+          "pmr_q2_15_text_Atok_11",
+          "pmr_q2_15_text_Atok_22",
+          "pmr_q2_15_text_Atok_1234"
+        ]
+      }
+    },
+    "selection_vs_literature": {
+      "description": "our score against the rules the data-selection literature uses, same budget",
+      "baseline": "random",
+      "arms": {
+        "gated_H (ours)": [
+          "lit_q15_18_text_gated_H_11",
+          "lit_q15_18_text_gated_H_22",
+          "lit_q15_18_text_gated_H_1234"
+        ],
+        "nll_high (LESS-like)": [
+          "lit_q15_18_text_nll_high_11",
+          "lit_q15_18_text_nll_high_22",
+          "lit_q15_18_text_nll_high_1234"
+        ],
+        "nll_low": [
+          "lit_q15_18_text_nll_low_11",
+          "lit_q15_18_text_nll_low_22",
+          "lit_q15_18_text_nll_low_1234"
+        ],
+        "random": [
+          "lit_q15_18_text_random_11",
+          "lit_q15_18_text_random_22",
+          "lit_q15_18_text_random_1234"
+        ]
+      }
+    },
+    "layer2_on_written": {
+      "description": "layer-2 selection on the corpus the teacher rewrote",
+      "baseline": "random",
+      "arms": {
+        "random": [
+          "selw_q15_18_artifact_rand11",
+          "selw_q15_18_artifact_rand22",
+          "selw_q15_18_artifact_rand1234"
+        ],
+        "gated_H": [
+          "selw_q15_18_artifact_hi11",
+          "selw_q15_18_artifact_hi22",
+          "selw_q15_18_artifact_hi1234"
+        ],
+        "gated_H_low": [
+          "selw_q15_18_artifact_lo11",
+          "selw_q15_18_artifact_lo22",
+          "selw_q15_18_artifact_lo1234"
+        ],
+        "gated_count": [
+          "selwc_q15_18_artifact_c11",
+          "selwc_q15_18_artifact_c22",
+          "selwc_q15_18_artifact_c1234"
+        ],
+        "length": [
+          "selw_q15_18_artifact_len11",
+          "selw_q15_18_artifact_len22",
+          "selw_q15_18_artifact_len1234"
+        ]
+      }
+    }
+  },
+  "_properties_note": "Measured by 04_calibration, teacher-forced on each cell's own corpus. Keys must match the cell names above.",
+  "base_model_properties": {
+    "GSM8K/Qwen2-1.5B": {
+      "over_confidence": 0.0107,
+      "ece": 0.0119,
+      "next_token_accuracy": 0.8952,
+      "entropy": 0.3016
+    },
+    "GSM8K/Qwen1.5-1.8B": {
+      "over_confidence": 0.0016,
+      "ece": 0.0119,
+      "next_token_accuracy": 0.9071,
+      "entropy": 0.3086
+    },
+    "GSM8K/Qwen2-0.5B": {
+      "over_confidence": 0.0192,
+      "ece": 0.0195,
+      "next_token_accuracy": 0.8645,
+      "entropy": 0.4005
+    },
+    "MATH/Qwen2-1.5B": {
+      "over_confidence": 0.004,
+      "ece": 0.0051,
+      "next_token_accuracy": 0.8454,
+      "entropy": 0.4938
+    },
+    "MATH/Qwen3-1.7B": {
+      "over_confidence": 0.0093,
+      "ece": 0.01,
+      "next_token_accuracy": 0.8059,
+      "entropy": 0.6363
+    },
+    "MATH/Qwen3-0.6B": {
+      "over_confidence": 0.0098,
+      "ece": 0.0103,
+      "next_token_accuracy": 0.7877,
+      "entropy": 0.7189
+    }
+  },
+  "cross_cell": {
+    "combined_arm": {
+      "description": "Does adding the store's logits to teacher-written text help, across cells",
+      "cells": {
+        "GSM8K/Qwen1.5-1.8B": {
+          "a": [
+            "seqlog_q15_18_K5_s11",
+            "seqlog_q15_18_K5_s22",
+            "seqlog_q15_18_K5_s1234",
+            "seqlog_q15_18_K5_s33",
+            "seqlog_q15_18_K5_s44",
+            "seqlog_q15_18_K5_s55"
+          ],
+          "b": [
+            "seqkd_q15_18_s11",
+            "seqkd_q15_18_s22",
+            "seqkd_q15_18_s1234",
+            "seqkd_q15_18_s33",
+            "seqkd_q15_18_s44",
+            "seqkd_q15_18_s55"
+          ]
+        },
+        "GSM8K/Qwen2-1.5B": {
+          "a": [
+            "seqlog2_q2_15_K5_s11",
+            "seqlog2_q2_15_K5_s22",
+            "seqlog2_q2_15_K5_s1234",
+            "seqlog2_q2_15_K5_s33",
+            "seqlog2_q2_15_K5_s44",
+            "seqlog2_q2_15_K5_s55"
+          ],
+          "b": [
+            "seqkd2_q2_15_s11",
+            "seqkd2_q2_15_s22",
+            "seqkd2_q2_15_s1234",
+            "seqkd2_q2_15_s33",
+            "seqkd2_q2_15_s44",
+            "seqkd2_q2_15_s55"
+          ]
+        },
+        "MATH/Qwen2-1.5B": {
+          "a": [
+            "seqlogm_q2_15_K5_s11",
+            "seqlogm_q2_15_K5_s22",
+            "seqlogm_q2_15_K5_s1234",
+            "seqlogm_q2_15_K5_s33",
+            "seqlogm_q2_15_K5_s44",
+            "seqlogm_q2_15_K5_s55"
+          ],
+          "b": [
+            "seqkdm_q2_15_s11",
+            "seqkdm_q2_15_s22",
+            "seqkdm_q2_15_s1234",
+            "seqkdm_q2_15_s33",
+            "seqkdm_q2_15_s44",
+            "seqkdm_q2_15_s55"
+          ]
+        },
+        "GSM8K/Qwen2-0.5B": {
+          "a": [
+            "sl_q2_05_q2_05_K5_s11",
+            "sl_q2_05_q2_05_K5_s22",
+            "sl_q2_05_q2_05_K5_s1234",
+            "sl_q2_05_q2_05_K5_s33",
+            "sl_q2_05_q2_05_K5_s44",
+            "sl_q2_05_q2_05_K5_s55"
+          ],
+          "b": [
+            "sk_q2_05_q2_05_text_s11",
+            "sk_q2_05_q2_05_text_s22",
+            "sk_q2_05_q2_05_text_s1234",
+            "sk_q2_05_q2_05_text_s33",
+            "sk_q2_05_q2_05_text_s44",
+            "sk_q2_05_q2_05_text_s55"
+          ]
+        },
+        "MATH/Qwen3-1.7B": {
+          "a": [
+            "sl_q3_17_q3_17_K5_s11",
+            "sl_q3_17_q3_17_K5_s22",
+            "sl_q3_17_q3_17_K5_s1234",
+            "sl_q3_17_q3_17_K5_s33",
+            "sl_q3_17_q3_17_K5_s44",
+            "sl_q3_17_q3_17_K5_s55"
+          ],
+          "b": [
+            "sk_q3_17_q3_17_text_s11",
+            "sk_q3_17_q3_17_text_s22",
+            "sk_q3_17_q3_17_text_s1234",
+            "sk_q3_17_q3_17_text_s33",
+            "sk_q3_17_q3_17_text_s44",
+            "sk_q3_17_q3_17_text_s55"
+          ]
+        }
+      }
+    }
+  },
+  "folds": {
+    "fold_gsm8k_q15_18": {
+      "folds": 5,
+      "scores": [
+        "gated_H",
+        "random",
+        "nll_high",
+        "H_high",
+        "H_low",
+        "gated_H_low",
+        "ifd_high",
+        "superfilter_high"
+      ],
+      "control": "random",
+      "seeds": [
+        11,
+        1234
+      ],
+      "extra_contrasts": [
+        [
+          "gated_H",
+          "ifd_high"
+        ],
+        [
+          "gated_H",
+          "superfilter_high"
+        ],
+        [
+          "gated_H",
+          "gated_H_low"
+        ],
+        [
+          "H_high",
+          "H_low"
+        ]
+      ],
+      "description": "layer-2 criterion, GSM8K / Qwen1.5-1.8B, fold as the unit",
+      "tag": "fld_q15_18_text_f{fold}_{score}_{seed}"
+    },
+    "fold_gsm8k_q2_15": {
+      "folds": 5,
+      "scores": [
+        "gated_H",
+        "random",
+        "nll_high",
+        "H_high",
+        "gated_H_low",
+        "H_low"
+      ],
+      "control": "random",
+      "seeds": [
+        11,
+        1234
+      ],
+      "extra_contrasts": [
+        [
+          "gated_H",
+          "gated_H_low"
+        ],
+        [
+          "H_high",
+          "H_low"
+        ]
+      ],
+      "description": "layer-2 criterion, GSM8K / Qwen2-1.5B, fold as the unit, both ends of the scale",
+      "tag": "fld2_q2_15_text_f{fold}_{score}_{seed}"
+    },
+    "fold_math_q2_15": {
+      "folds": 5,
+      "scores": [
+        "gated_H",
+        "random",
+        "nll_high"
+      ],
+      "control": "random",
+      "seeds": [
+        11,
+        1234
+      ],
+      "extra_contrasts": [
+        [
+          "gated_H",
+          "nll_high"
+        ]
+      ],
+      "description": "layer-2 criterion at a matched-coverage gate, MATH / Qwen2-1.5B",
+      "tag": "fldm_q2_15_text_f{fold}_{score}_{seed}"
+    },
+    "fold_artifact_q15_18": {
+      "folds": 5,
+      "scores": [
+        "gated_H",
+        "random",
+        "nll_high"
+      ],
+      "control": "random",
+      "seeds": [
+        11,
+        1234
+      ],
+      "extra_contrasts": [
+        [
+          "gated_H",
+          "nll_high"
+        ]
+      ],
+      "description": "layer-2 criterion with the store switched on, GSM8K / Qwen1.5-1.8B",
+      "tag": "flda_q15_18_artifact_f{fold}_{score}_{seed}"
+    },
+    "fold_math2_q2_15": {
+      "folds": 5,
+      "scores": [
+        "gated_H",
+        "random",
+        "nll_high",
+        "H_high",
+        "H_low",
+        "gated_H_low"
+      ],
+      "control": "random",
+      "seeds": [
+        11,
+        1234
+      ],
+      "extra_contrasts": [
+        [
+          "gated_H",
+          "gated_H_low"
+        ],
+        [
+          "H_high",
+          "H_low"
+        ]
+      ],
+      "description": "layer-2 criterion, MATH / Qwen2-1.5B, matched-coverage gate and corpus-derived strata",
+      "tag": "fldm2_q2_15_text_f{fold}_{score}_{seed}"
+    },
+    "fold_ape210k": {
+      "folds": 5,
+      "scores": [
+        "gated_H",
+        "random",
+        "nll_high"
+      ],
+      "control": "random",
+      "seeds": [
+        11,
+        1234
+      ],
+      "extra_contrasts": [
+        [
+          "gated_H",
+          "nll_high"
+        ]
+      ],
+      "description": "layer-2 criterion, ape210k / Qwen1.5-1.8B, fold as the unit",
+      "tag": "fldape_q15_18_text_f{fold}_{score}_{seed}"
+    },
+    "fold_ecqa": {
+      "folds": 5,
+      "scores": [
+        "gated_H",
+        "random",
+        "nll_high",
+        "H_high",
+        "H_low",
+        "gated_H_low"
+      ],
+      "control": "random",
+      "seeds": [
+        11,
+        1234
+      ],
+      "extra_contrasts": [
+        [
+          "gated_H",
+          "gated_H_low"
+        ],
+        [
+          "H_high",
+          "H_low"
+        ]
+      ],
+      "description": "layer-2 criterion, ecqa / Qwen1.5-1.8B, fold as the unit",
+      "tag": "fldecq_q15_18_text_f{fold}_{score}_{seed}"
+    },
+    "fold_kk": {
+      "folds": 5,
+      "scores": [
+        "gated_H",
+        "random",
+        "nll_high"
+      ],
+      "control": "random",
+      "seeds": [
+        11,
+        1234
+      ],
+      "extra_contrasts": [
+        [
+          "gated_H",
+          "nll_high"
+        ]
+      ],
+      "description": "layer-2 criterion, Knights and Knaves / Qwen1.5-1.8B, fold as the unit",
+      "tag": "fldkk_q15_18_text_f{fold}_{score}_{seed}"
+    }
+  }
+}

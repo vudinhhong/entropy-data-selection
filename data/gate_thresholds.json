@@ -1,0 +1,52 @@
+{
+  "_about": "Selection gate thresholds. tau is set per corpus and per teacher so that the same fraction of answer positions passes the gate; the coverage target is the quantity held fixed, not the nats. Where a cell is listed as coverage-calibrated the threshold was solved for at build time from that teacher's own entropy distribution, so its value in nats depends on the teacher and is not a constant of the corpus. These are the settings the selections in data/subsets/ were built with; code/01_build_store/config.json is authoritative.",
+  "_coverage_target": 0.297,
+  "thresholds": [
+    {
+      "corpus": "gsm8k",
+      "teacher": "Qwen3-4B-Base, fine-tuned",
+      "tau_nats": 0.0335,
+      "source": "Table 8 of the paper"
+    },
+    {
+      "corpus": "math",
+      "teacher": "Qwen3-4B-Base, fine-tuned",
+      "tau_nats": 0.4404,
+      "source": "Table 8 of the paper"
+    },
+    {
+      "corpus": "ecqa",
+      "teacher": "Qwen3-4B-Base, fine-tuned",
+      "tau_nats": 0.9111,
+      "source": "Table 8 of the paper"
+    },
+    {
+      "corpus": "orca",
+      "teacher": "Qwen3-4B-Base, fine-tuned",
+      "tau_nats": 0.0139719,
+      "measured_coverage": 0.2970004,
+      "source": "code/15_disagreement/corpus_dis.py, 2999 sequences / 836487 positions"
+    },
+    {
+      "corpus": "gsm8k",
+      "teacher": "Qwen3-4B-Base, NOT fine-tuned",
+      "tau_nats": 0.1725,
+      "source": "the untrained-teacher section of the paper"
+    },
+    {
+      "corpus": "ape210k",
+      "teacher": "Qwen3-4B-Base, fine-tuned",
+      "tau_nats": null,
+      "calibration": "coverage:0.297",
+      "source": "code/01_build_store/config.json, experiment ape210k"
+    },
+    {
+      "corpus": "gsm8k",
+      "teacher": "Llama-3.2-3B, fine-tuned",
+      "tau_nats": null,
+      "calibration": "coverage:0.297",
+      "note": "different tokenizer and entropy scale from Qwen, so the threshold is recalibrated rather than reused",
+      "source": "code/01_build_store/config.json, experiment gsm8k_llamateacher"
+    }
+  ]
+}

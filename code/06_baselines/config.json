@@ -1,0 +1,204 @@
+{
+  "_comment": "Paths are relative to the root of this release. Both baselines need the teacher: sequence_kd loads it once to write solutions and then releases it, full_logit_kd keeps it resident for every step.",
+  "results_dir": "results/grid",
+  "report_dir": "results",
+  "defaults": {
+    "device": "cuda",
+    "seed": 1234,
+    "dataset": "gsm8k",
+    "teacher": "runs/teacher_gsm8k",
+    "tokenizer": "Qwen/Qwen3-4B-Base",
+    "lora": 32,
+    "lr": 0.0002,
+    "epochs": 2,
+    "batch_size": 8,
+    "accumulate": 2,
+    "eval_batch_size": 24,
+    "max_new_tokens": 320,
+    "students": [
+      {
+        "label": "q15_18",
+        "model": "Qwen/Qwen1.5-1.8B"
+      }
+    ],
+    "subsets": [
+      "artifacts/subsets/v2_subset_s11.json",
+      "artifacts/subsets/v2_subset_s22.json",
+      "artifacts/subsets/v2_subset_s1234.json"
+    ]
+  },
+  "baselines": {
+    "sequence_kd": {
+      "description": "the teacher writes solutions to the same prompts; the student trains on that text alone",
+      "prefix": "seqkd",
+      "generations_dir": "artifacts/teacher_solutions",
+      "generate_batch_size": 16
+    },
+    "full_logit_kd": {
+      "description": "the teacher supervises all 151,936 logits at the same gated positions; the ceiling the store approximates",
+      "prefix": "fullkd",
+      "store": "artifacts/store4b.npz",
+      "tau": 0.0335,
+      "gate": "high",
+      "lam": 1.0
+    },
+    "sequence_kd_q2_15": {
+      "kind": "sequence_kd",
+      "description": "sequence-level KD replicated on the second GSM8K cell",
+      "prefix": "seqkd2",
+      "students": [
+        {
+          "label": "q2_15",
+          "model": "Qwen/Qwen2-1.5B"
+        }
+      ],
+      "subsets": [
+        "artifacts/subsets/v2_subset_s11.json",
+        "artifacts/subsets/v2_subset_s22.json",
+        "artifacts/subsets/v2_subset_s1234.json"
+      ],
+      "generations_dir": "artifacts/teacher_solutions"
+    },
+    "sequence_kd_math": {
+      "kind": "sequence_kd",
+      "description": "sequence-level KD on MATH, where the teacher is weaker",
+      "prefix": "seqkdm",
+      "dataset": "math",
+      "teacher": "runs/teacher_math",
+      "students": [
+        {
+          "label": "q2_15",
+          "model": "Qwen/Qwen2-1.5B"
+        }
+      ],
+      "subsets": [
+        "artifacts/subsets/v2m_subset_s11.json",
+        "artifacts/subsets/v2m_subset_s22.json",
+        "artifacts/subsets/v2m_subset_s1234.json"
+      ],
+      "generations_dir": "artifacts/teacher_solutions_math"
+    },
+    "sequence_kd_more": {
+      "kind": "sequence_kd",
+      "prefix": "seqkd",
+      "description": "sequence-level KD, three further subsets, GSM8K cell one",
+      "students": [
+        {
+          "label": "q15_18",
+          "model": "Qwen/Qwen1.5-1.8B"
+        }
+      ],
+      "subsets": [
+        "artifacts/subsets/v2_subset_s33.json",
+        "artifacts/subsets/v2_subset_s44.json",
+        "artifacts/subsets/v2_subset_s55.json"
+      ],
+      "generations_dir": "artifacts/teacher_solutions"
+    },
+    "sequence_kd_q2_15_more": {
+      "kind": "sequence_kd",
+      "prefix": "seqkd2",
+      "description": "sequence-level KD, three further subsets, GSM8K cell two",
+      "students": [
+        {
+          "label": "q2_15",
+          "model": "Qwen/Qwen2-1.5B"
+        }
+      ],
+      "subsets": [
+        "artifacts/subsets/v2_subset_s33.json",
+        "artifacts/subsets/v2_subset_s44.json",
+        "artifacts/subsets/v2_subset_s55.json"
+      ],
+      "generations_dir": "artifacts/teacher_solutions"
+    },
+    "sequence_kd_math_more": {
+      "kind": "sequence_kd",
+      "prefix": "seqkdm",
+      "description": "sequence-level KD, three further subsets, MATH",
+      "dataset": "math",
+      "teacher": "runs/teacher_math",
+      "students": [
+        {
+          "label": "q2_15",
+          "model": "Qwen/Qwen2-1.5B"
+        }
+      ],
+      "subsets": [
+        "artifacts/subsets/v2m_subset_s33.json",
+        "artifacts/subsets/v2m_subset_s44.json",
+        "artifacts/subsets/v2m_subset_s55.json"
+      ],
+      "generations_dir": "artifacts/teacher_solutions_math"
+    },
+    "reference_text_control": {
+      "kind": "sequence_kd",
+      "prefix": "refctl",
+      "description": "the sequence-KD code path fed the corpus's own answers; must land on the text-only baseline",
+      "students": [
+        {
+          "label": "q15_18",
+          "model": "Qwen/Qwen1.5-1.8B"
+        }
+      ],
+      "subsets": [
+        "artifacts/subsets/v2_subset_s11.json",
+        "artifacts/subsets/v2_subset_s22.json",
+        "artifacts/subsets/v2_subset_s1234.json"
+      ],
+      "generations_dir": "artifacts/reference_solutions"
+    },
+    "sequence_kd_fullD": {
+      "kind": "sequence_kd",
+      "prefix": "seqkdF",
+      "description": "sequence-level KD over the whole student half, not a tenth of it",
+      "students": [
+        {
+          "label": "q15_18",
+          "model": "Qwen/Qwen1.5-1.8B"
+        }
+      ],
+      "subsets": [
+        {
+          "path": "artifacts/subsets/subset_FULL.json",
+          "label": "r11",
+          "seed": 11
+        },
+        {
+          "path": "artifacts/subsets/subset_FULL.json",
+          "label": "r22",
+          "seed": 22
+        },
+        {
+          "path": "artifacts/subsets/subset_FULL.json",
+          "label": "r1234",
+          "seed": 1234
+        }
+      ],
+      "generations_dir": "artifacts/teacher_solutions_fullD",
+      "generate_batch_size": 24
+    },
+    "rewrite_math_fullD": {
+      "kind": "sequence_kd",
+      "prefix": "seqkdFM",
+      "description": "the MATH teacher rewrites the whole student half, so the same split can be studied on its text",
+      "dataset": "math",
+      "teacher": "runs/teacher_math",
+      "students": [
+        {
+          "label": "q2_15",
+          "model": "Qwen/Qwen2-1.5B"
+        }
+      ],
+      "subsets": [
+        {
+          "path": "artifacts/subsets/subset_FULL_math.json",
+          "label": "D",
+          "seed": 11
+        }
+      ],
+      "generations_dir": "artifacts/teacher_solutions_fullD_math",
+      "generate_batch_size": 24
+    }
+  }
+}

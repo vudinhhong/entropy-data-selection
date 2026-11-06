@@ -1,0 +1,12 @@
+# Re-running the experiments. Versions are the ones that produced every number
+# in the paper, recorded from the machine that ran them: Python 3.13.5,
+# CUDA 12.8, one NVIDIA RTX 4090 (24 GB; the training peak is 16.4 GB).
+#
+# torch must come from PyTorch's own index, not PyPI:
+#   pip install torch==2.9.0+cu128 --index-url https://download.pytorch.org/whl/cu128
+#   pip install -r requirements-gpu.txt
+
+-r requirements.txt
+transformers==4.57.1
+peft==0.21.2
+datasets==3.6.0

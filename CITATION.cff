@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the paper."
+type: software
+title: "Corpus-dependent direction of teacher predictive entropy in fine-tuning data selection. Code and per-run results"
+version: "1.0.0"
+date-released: 2026-11-02
+# Uncomment once the Zenodo DOI is reserved:
+# doi: "10.5281/zenodo.XXXXXXX"
+authors:
+  - family-names: Vu
+    given-names: Dinh-Hong
+    affiliation: "Natural Language Processing and Knowledge Discovery Research Group, Faculty of Information Technology, Ton Duc Thang University"
+  - family-names: Duong
+    given-names: Trong-Chi
+    affiliation: "Natural Language Processing and Knowledge Discovery Research Group, Faculty of Information Technology, Ton Duc Thang University"
+  - family-names: Le
+    given-names: Tuong
+    email: lc.tuong@hutech.edu.vn
+    affiliation: "Faculty of Information Technology, HUTECH University, Ho Chi Minh City, Vietnam"
+  - family-names: Le
+    given-names: Anh-Cuong
+    affiliation: "Natural Language Processing and Knowledge Discovery Research Group, Faculty of Information Technology, Ton Duc Thang University"
+abstract: >-
+  Code, the selected index lists and the per-run accuracy table behind the
+  paper on selecting fine-tuning data by the predictive entropy a teacher
+  model carries at gated positions. Includes the two-ended contrast that is
+  the paper's main test, the disagreement-rate measurement, the
+  published-criterion baselines, and a verification script that recomputes
+  the paper's headline numbers from the released table alone.
+keywords:
+  - data selection
+  - knowledge distillation
+  - language models
+  - predictive entropy
+license: MIT

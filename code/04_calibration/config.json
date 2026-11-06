@@ -1,0 +1,87 @@
+{
+  "_comment": "Paths are relative to the root of this release. One forward pass per model; no training. The correlations at the end need the per-cell gains, which 05_results prints.",
+  "report_dir": "results",
+  "defaults": {
+    "device": "cuda",
+    "n_sequences": 120
+  },
+  "corpora": [
+    {
+      "dataset": "gsm8k",
+      "pool": "artifacts/subsets/split_B.json",
+      "models": [
+        {
+          "label": "Qwen1.5-1.8B",
+          "model": "Qwen/Qwen1.5-1.8B"
+        },
+        {
+          "label": "Qwen2-0.5B",
+          "model": "Qwen/Qwen2-0.5B"
+        },
+        {
+          "label": "Qwen2-1.5B",
+          "model": "Qwen/Qwen2-1.5B"
+        },
+        {
+          "label": "Qwen2.5-0.5B",
+          "model": "Qwen/Qwen2.5-0.5B"
+        },
+        {
+          "label": "Qwen2.5-1.5B",
+          "model": "Qwen/Qwen2.5-1.5B"
+        },
+        {
+          "label": "Qwen3-0.6B",
+          "model": "Qwen/Qwen3-0.6B-Base"
+        },
+        {
+          "label": "Qwen3-1.7B",
+          "model": "Qwen/Qwen3-1.7B-Base"
+        }
+      ]
+    },
+    {
+      "dataset": "math",
+      "pool": "artifacts/subsets/split_B_math.json",
+      "models": [
+        {
+          "label": "Qwen1.5-1.8B",
+          "model": "Qwen/Qwen1.5-1.8B"
+        },
+        {
+          "label": "Qwen2-0.5B",
+          "model": "Qwen/Qwen2-0.5B"
+        },
+        {
+          "label": "Qwen2-1.5B",
+          "model": "Qwen/Qwen2-1.5B"
+        },
+        {
+          "label": "Qwen2.5-0.5B",
+          "model": "Qwen/Qwen2.5-0.5B"
+        },
+        {
+          "label": "Qwen2.5-1.5B",
+          "model": "Qwen/Qwen2.5-1.5B"
+        },
+        {
+          "label": "Qwen3-0.6B",
+          "model": "Qwen/Qwen3-0.6B-Base"
+        },
+        {
+          "label": "Qwen3-1.7B",
+          "model": "Qwen/Qwen3-1.7B-Base"
+        }
+      ]
+    }
+  ],
+  "_cell_gains_note": "artifact minus text, in accuracy points, for the six qualified cells; used only for the correlation table",
+  "cell_gains": {
+    "gsm8k/Qwen2-0.5B": 0.23,
+    "gsm8k/Qwen2-1.5B": 3.54,
+    "gsm8k/Qwen1.5-1.8B": 3.34,
+    "math/Qwen2-1.5B": 1.27,
+    "math/Qwen3-0.6B": -0.4,
+    "math/Qwen3-1.7B": -0.4
+  }
+}

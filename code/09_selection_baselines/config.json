@@ -1,0 +1,22 @@
+{
+  "_comment": "Published selection criteria, implemented rather than approximated. IFD is scored with the model being tuned; Superfiltering is the same score from a small proxy, which is the whole of its proposal.",
+  "report_dir": "results",
+  "experiments": [
+    {
+      "name": "ifd_gsm8k",
+      "dataset": "gsm8k",
+      "model": "Qwen/Qwen1.5-1.8B",
+      "pool": "artifacts/subsets/split_B.json",
+      "output": "artifacts/subsets/ifd_gsm8k.json",
+      "device": "cuda"
+    },
+    {
+      "name": "superfilter_gsm8k",
+      "dataset": "gsm8k",
+      "model": "EleutherAI/pythia-410m",
+      "pool": "artifacts/subsets/split_B.json",
+      "output": "artifacts/subsets/superfilter_gsm8k.json",
+      "device": "cuda"
+    }
+  ]
+}

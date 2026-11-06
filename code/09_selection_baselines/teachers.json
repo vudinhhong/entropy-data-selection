@@ -1,0 +1,33 @@
+{
+  "_comment": "Measured before looking at any selection result on the new corpora, because the scope condition it tests was stated in advance.",
+  "report_dir": "results",
+  "experiments": [
+    {
+      "name": "ecqa",
+      "dataset": "ecqa",
+      "teacher": "runs/teacher_ecqa",
+      "tokenizer": "Qwen/Qwen3-4B-Base",
+      "subset": "artifacts/subsets/ecqa_subset_s11.json",
+      "batch_size": 16,
+      "max_new_tokens": 160
+    },
+    {
+      "name": "ape210k",
+      "dataset": "ape210k",
+      "teacher": "runs/teacher_ape210k",
+      "tokenizer": "Qwen/Qwen3-4B-Base",
+      "subset": "artifacts/subsets/ape210k_subset_s11.json",
+      "batch_size": 16,
+      "max_new_tokens": 256
+    },
+    {
+      "name": "gsm8k_llama",
+      "dataset": "gsm8k",
+      "teacher": "runs/teacher_gsm8k_llama",
+      "tokenizer": "meta-llama/Llama-3.2-3B",
+      "subset": "artifacts/subsets/v2_subset_s11.json",
+      "batch_size": 16,
+      "max_new_tokens": 256
+    }
+  ]
+}

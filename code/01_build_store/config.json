@@ -1,0 +1,846 @@
+{
+  "_comment": "Paths are relative to the root of this release. The GPU stages were run on a single card; teacher plus forward pass is about an hour per corpus.",
+  "report_dir": "results",
+  "defaults": {
+    "device": "cuda",
+    "seed": 1234,
+    "split_seed": 1234,
+    "artifacts": "artifacts/subsets",
+    "subset_fraction": 0.1,
+    "subset_seeds": [
+      11,
+      22,
+      1234
+    ],
+    "tau": 0.0335
+  },
+  "experiments": [
+    {
+      "name": "gsm8k",
+      "dataset": "gsm8k",
+      "suffix": "",
+      "subset_prefix": "v2_subset",
+      "teacher": {
+        "model": "Qwen/Qwen3-4B-Base",
+        "output": "runs/teacher_gsm8k",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 3,
+        "batch_size": 8,
+        "accumulate": 2,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "output": "artifacts/store4b",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "sham": {
+        "source": "artifacts/store4b.npz",
+        "flat_output": "artifacts/store4b_deu.npz",
+        "shuffled_output": "artifacts/store4b_tronid.npz",
+        "seed": 1234
+      },
+      "smooth": {
+        "source": "artifacts/store4b.npz",
+        "output": "artifacts/store4b_smooth.npz",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "vocab_size": 151936
+      },
+      "fold_selection": {
+        "_comment": "Independent replicates of the layer-2 criterion: the pool is cut into disjoint folds and each is selected on its own, so a paired test has one observation per fold rather than one subset trained many times.",
+        "store": "artifacts/store4b.npz",
+        "meta": "artifacts/subsets/store4b.meta.json",
+        "pool": "artifacts/subsets/split_B.json",
+        "tau": 0.0335,
+        "folds": 5,
+        "fold_seed": 4242,
+        "fraction": 0.1,
+        "scores": [
+          "gated_H",
+          "random",
+          "nll_high",
+          "H_high",
+          "H_low",
+          "gated_H_low",
+          "ifd_high",
+          "superfilter_high"
+        ],
+        "prefix": "fold",
+        "external_scores": [
+          {
+            "path": "artifacts/subsets/ifd_gsm8k.json",
+            "key": "ifd_high",
+            "cap": 1.0
+          },
+          {
+            "path": "artifacts/subsets/superfilter_gsm8k.json",
+            "key": "superfilter_high",
+            "cap": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "name": "math",
+      "dataset": "math",
+      "suffix": "_math",
+      "subset_prefix": "v2m_subset",
+      "skip": [
+        "sham",
+        "smooth"
+      ],
+      "teacher": {
+        "model": "Qwen/Qwen3-4B-Base",
+        "output": "runs/teacher_math",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 3,
+        "batch_size": 8,
+        "accumulate": 2,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_math",
+        "output": "artifacts/store4b_math",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "fold_selection": {
+        "_comment": "MATH with a corpus-specific gate and a corpus-derived stratification ladder. tau=0.4404 is the 70th percentile of the teacher's entropy over the MATH student pool, which puts gate coverage at 29.7% -- the same coverage GSM8K gets from tau=0.0335. The fixed step ladder was set for GSM8K and is far too coarse here: MATH answers run to 122 steps, so an open top stratum let the entropy arm take its longest members and the arms ended up 2.35 steps apart inside a single fold. Deriving the ladder from the pool brings that to 0.74.",
+        "store": "artifacts/store4b_math.npz",
+        "meta": "artifacts/subsets/store4b_math.meta.json",
+        "pool": "artifacts/subsets/split_B_math.json",
+        "tau": 0.4404,
+        "folds": 5,
+        "fold_seed": 4242,
+        "fraction": 0.1,
+        "scores": [
+          "gated_H",
+          "random",
+          "nll_high",
+          "H_high",
+          "H_low",
+          "gated_H_low"
+        ],
+        "prefix": "foldm2",
+        "min_share": 0.015
+      },
+      "selection": {
+        "_comment": "The whole-pool MATH selection at the matched-coverage gate, for comparison with the tau=0.0335 result.",
+        "store": "artifacts/store4b_math.npz",
+        "meta": "artifacts/subsets/store4b_math.meta.json",
+        "pool": "artifacts/subsets/split_B_math.json",
+        "tau": 0.4404,
+        "scores": [
+          "gated_H"
+        ],
+        "seeds": [
+          1234
+        ],
+        "prefix": "pairm30",
+        "fraction": 0.1
+      }
+    },
+    {
+      "name": "seqkd_s11",
+      "_note": "A store over the text the teacher wrote itself, to ask what its distribution looks like on its own greedy output.",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "corpus_file": "artifacts/teacher_solutions/v2_subset_s11.json",
+        "output": "artifacts/store_seqkd_s11",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkd_s22",
+      "_note": "A store over the text the teacher wrote itself, to ask what its distribution looks like on its own greedy output.",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "corpus_file": "artifacts/teacher_solutions/v2_subset_s22.json",
+        "output": "artifacts/store_seqkd_s22",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkd_s1234",
+      "_note": "A store over the text the teacher wrote itself, to ask what its distribution looks like on its own greedy output.",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "corpus_file": "artifacts/teacher_solutions/v2_subset_s1234.json",
+        "output": "artifacts/store_seqkd_s1234",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkdm_s11",
+      "_note": "MATH: a store over the text the MATH teacher wrote itself.",
+      "dataset": "math",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_math",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions_math/v2m_subset_s11.json",
+        "output": "artifacts/store_seqkdm_s11",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkdm_s22",
+      "_note": "MATH: a store over the text the MATH teacher wrote itself.",
+      "dataset": "math",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_math",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions_math/v2m_subset_s22.json",
+        "output": "artifacts/store_seqkdm_s22",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkdm_s1234",
+      "_note": "MATH: a store over the text the MATH teacher wrote itself.",
+      "dataset": "math",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_math",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions_math/v2m_subset_s1234.json",
+        "output": "artifacts/store_seqkdm_s1234",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "gsm8k_more_subsets",
+      "dataset": "gsm8k",
+      "suffix": "",
+      "subset_prefix": "v2_subset",
+      "teacher": {
+        "model": "Qwen/Qwen3-4B-Base",
+        "output": "runs/teacher_gsm8k",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 3,
+        "batch_size": 8,
+        "accumulate": 2,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "output": "artifacts/store4b",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "sham": {
+        "source": "artifacts/store4b.npz",
+        "flat_output": "artifacts/store4b_deu.npz",
+        "shuffled_output": "artifacts/store4b_tronid.npz",
+        "seed": 1234
+      },
+      "smooth": {
+        "source": "artifacts/store4b.npz",
+        "output": "artifacts/store4b_smooth.npz",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "vocab_size": 151936
+      },
+      "subset_seeds": [
+        33,
+        44,
+        55
+      ],
+      "skip": [
+        "teacher",
+        "store",
+        "sham",
+        "smooth",
+        "verify"
+      ]
+    },
+    {
+      "name": "math_more_subsets",
+      "dataset": "math",
+      "suffix": "_math",
+      "subset_prefix": "v2m_subset",
+      "skip": [
+        "teacher",
+        "store",
+        "verify"
+      ],
+      "teacher": {
+        "model": "Qwen/Qwen3-4B-Base",
+        "output": "runs/teacher_math",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 3,
+        "batch_size": 8,
+        "accumulate": 2,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_math",
+        "output": "artifacts/store4b_math",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "subset_seeds": [
+        33,
+        44,
+        55
+      ]
+    },
+    {
+      "name": "seqkd_s33",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions/v2_subset_s33.json",
+        "output": "artifacts/store_seqkd_s33",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkdm_s33",
+      "dataset": "math",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_math",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions_math/v2m_subset_s33.json",
+        "output": "artifacts/store_seqkdm_s33",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkd_s44",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions/v2_subset_s44.json",
+        "output": "artifacts/store_seqkd_s44",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkdm_s44",
+      "dataset": "math",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_math",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions_math/v2m_subset_s44.json",
+        "output": "artifacts/store_seqkdm_s44",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkd_s55",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions/v2_subset_s55.json",
+        "output": "artifacts/store_seqkd_s55",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkdm_s55",
+      "dataset": "math",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_math",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions_math/v2m_subset_s55.json",
+        "output": "artifacts/store_seqkdm_s55",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "seqkd_fullD",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_gsm8k",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions_fullD/subset_FULL.json",
+        "output": "artifacts/store_seqkd_fullD",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "name": "layer2_selection",
+      "_note": "Sequence selection by a teacher-derived score, the layer of the selection algorithm that uses the store. These subsets compare the layer-2 scores at a matched token budget.",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "store",
+        "sham",
+        "smooth",
+        "verify"
+      ],
+      "selection": {
+        "store": "artifacts/store4b.npz",
+        "meta": "artifacts/subsets/store4b.meta.json",
+        "pool": "artifacts/subsets/split_B.json",
+        "tau": 0.0335,
+        "token_budget": 46742,
+        "seeds": [
+          11,
+          22,
+          1234
+        ],
+        "scores": [
+          "random",
+          "gated_H",
+          "gated_H_low",
+          "gated_count",
+          "H_total",
+          "length"
+        ],
+        "prefix": "sel"
+      }
+    },
+    {
+      "name": "layer2_selection_written",
+      "_note": "The same selection question on the corpus the teacher rewrote, where the text baseline is already high.",
+      "dataset": "gsm8k",
+      "skip": [
+        "splits",
+        "teacher",
+        "store",
+        "sham",
+        "smooth",
+        "verify"
+      ],
+      "selection": {
+        "store": "artifacts/store_seqkd_fullD.npz",
+        "meta": "artifacts/store_seqkd_fullD.meta.json",
+        "tau": 0.0335,
+        "token_budget": 46742,
+        "seeds": [
+          11,
+          22,
+          1234
+        ],
+        "scores": [
+          "random",
+          "gated_H",
+          "gated_H_low",
+          "gated_count",
+          "length"
+        ],
+        "prefix": "selk"
+      }
+    },
+    {
+      "name": "seqkdm_fullD",
+      "dataset": "math",
+      "_note": "store over the MATH teacher's rewrite of the whole student half",
+      "skip": [
+        "splits",
+        "teacher",
+        "sham",
+        "smooth"
+      ],
+      "store": {
+        "teacher": "runs/teacher_math",
+        "tokenizer": "Qwen/Qwen3-4B-Base",
+        "corpus_file": "artifacts/teacher_solutions_fullD_math/subset_FULL_math.json",
+        "output": "artifacts/store_seqkdm_fullD",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      }
+    },
+    {
+      "_comment": "Elementary arithmetic, sampled to exactly GSM8K's 7,473 training items so corpus size is not a confound. Answers are newline-separated calculator steps, so layer 1 partitions on line count as it does for GSM8K (largest stratum 29.1% against GSM8K's 28.7%). Chosen to test the scope condition from the GSM8K-MATH comparison: a teacher should find this corpus easy.",
+      "name": "ape210k",
+      "dataset": "ape210k",
+      "suffix": "_ape210k",
+      "subset_prefix": "ape210k_subset",
+      "teacher": {
+        "model": "Qwen/Qwen3-4B-Base",
+        "output": "runs/teacher_ape210k",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 3,
+        "batch_size": 8,
+        "accumulate": 2,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_ape210k",
+        "output": "artifacts/store4b_ape210k",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "fold_selection": {
+        "store": "artifacts/store4b_ape210k.npz",
+        "meta": "artifacts/store4b_ape210k.meta.json",
+        "pool": "artifacts/subsets/split_B_ape210k.json",
+        "tau": "coverage:0.297",
+        "folds": 5,
+        "fold_seed": 4242,
+        "fraction": 0.1,
+        "min_share": 0.015,
+        "stratify_by": "steps",
+        "scores": [
+          "gated_H",
+          "random",
+          "nll_high"
+        ],
+        "prefix": "fold_ape210k"
+      }
+    },
+    {
+      "_comment": "Commonsense multiple choice with human justifications -- not mathematics. Layer 1 partitions on answer token count rather than line count, because 64% of ECQA justifications have the same number of lines and that proxy is degenerate; token deciles give a largest stratum of 12.2%.",
+      "name": "ecqa",
+      "dataset": "ecqa",
+      "suffix": "_ecqa",
+      "subset_prefix": "ecqa_subset",
+      "teacher": {
+        "model": "Qwen/Qwen3-4B-Base",
+        "output": "runs/teacher_ecqa",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 3,
+        "batch_size": 8,
+        "accumulate": 2,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_ecqa",
+        "output": "artifacts/store4b_ecqa",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "fold_selection": {
+        "store": "artifacts/store4b_ecqa.npz",
+        "meta": "artifacts/store4b_ecqa.meta.json",
+        "pool": "artifacts/subsets/split_B_ecqa.json",
+        "tau": "coverage:0.297",
+        "folds": 5,
+        "fold_seed": 4242,
+        "fraction": 0.1,
+        "min_share": 0.015,
+        "stratify_by": "npos",
+        "scores": [
+          "gated_H",
+          "random",
+          "nll_high",
+          "H_high",
+          "H_low",
+          "gated_H_low"
+        ],
+        "prefix": "fold_ecqa"
+      }
+    },
+    {
+      "_comment": "Knights and Knaves (Xie et al., NeurIPS 2024): deductive logic puzzles, not mathematics, with a reference chain that is generated from the puzzle rather than written freely. That is the variable ECQA could not isolate -- there, every item admits many valid justifications, so the teacher's uncertainty mixes 'I do not know' with 'I would have said it differently'. Here the chain is near-unique, so a failure cannot be blamed on paraphrase freedom.",
+      "name": "kk",
+      "dataset": "kk",
+      "suffix": "_kk",
+      "subset_prefix": "kk_subset",
+      "teacher": {
+        "model": "Qwen/Qwen3-4B-Base",
+        "output": "runs/teacher_kk",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 3,
+        "batch_size": 8,
+        "accumulate": 2,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_kk",
+        "output": "artifacts/store4b_kk",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "fold_selection": {
+        "store": "artifacts/store4b_kk.npz",
+        "meta": "artifacts/store4b_kk.meta.json",
+        "pool": "artifacts/subsets/split_B_kk.json",
+        "tau": "coverage:0.297",
+        "folds": 5,
+        "fold_seed": 4242,
+        "fraction": 0.1,
+        "min_share": 0.015,
+        "stratify_by": "steps",
+        "scores": [
+          "gated_H",
+          "random",
+          "nll_high"
+        ],
+        "prefix": "fold_kk"
+      }
+    },
+    {
+      "_comment": "A corpus large enough to be saturating and selective at the same time. On GSM8K a tenth of a fold is 75 sequences, which leaves a 1B student at a third of what the whole corpus gives it; the question of which sequences to keep cannot be asked there. Here a tenth of a fold is about 3,000.",
+      "name": "orca",
+      "dataset": "orca",
+      "suffix": "_orca",
+      "subset_prefix": "orca_subset",
+      "teacher_share": 0.25,
+      "skip": [
+        "sham",
+        "smooth",
+        "selection"
+      ],
+      "teacher": {
+        "model": "Qwen/Qwen3-4B-Base",
+        "output": "runs/teacher_orca",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 2,
+        "batch_size": 8,
+        "accumulate": 2,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_orca",
+        "output": "artifacts/store4b_orca",
+        "k_max": 50,
+        "batch_size": 8,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "fold_selection": {
+        "store": "artifacts/store4b_orca.npz",
+        "meta": "artifacts/store4b_orca.meta.json",
+        "pool": "artifacts/subsets/split_B_orca.json",
+        "tau": "coverage:0.297",
+        "folds": 5,
+        "fold_seed": 4242,
+        "fraction": 0.1,
+        "min_share": 0.015,
+        "stratify_by": "steps",
+        "scores": [
+          "gated_H",
+          "random",
+          "nll_high",
+          "H_high",
+          "gated_H_low",
+          "H_low"
+        ],
+        "prefix": "fold_orca"
+      }
+    },
+    {
+      "_comment": "Same store, same folds, half a fold instead of a tenth. The point of the second budget is that it is near-saturating, so the only thing separating it from the first is how much of the fold's value a random draw already has.",
+      "name": "orca_half",
+      "dataset": "orca",
+      "suffix": "_orca",
+      "teacher_share": 0.25,
+      "skip": [
+        "splits",
+        "teacher",
+        "store",
+        "sham",
+        "smooth",
+        "selection",
+        "verify"
+      ],
+      "fold_selection": {
+        "store": "artifacts/store4b_orca.npz",
+        "meta": "artifacts/store4b_orca.meta.json",
+        "pool": "artifacts/subsets/split_B_orca.json",
+        "tau": "coverage:0.297",
+        "folds": 5,
+        "fold_seed": 4242,
+        "fraction": 0.5,
+        "min_share": 0.015,
+        "stratify_by": "steps",
+        "scores": [
+          "gated_H",
+          "random",
+          "gated_H_low",
+          "length"
+        ],
+        "prefix": "foldh_orca"
+      }
+    },
+    {
+      "_comment": "Same corpus, same split, same folds, same student, a teacher from another family. Tests whether the criterion needs the teacher and the student to share a lineage.",
+      "name": "gsm8k_llamateacher",
+      "dataset": "gsm8k",
+      "suffix": "",
+      "skip": [
+        "splits",
+        "sham",
+        "smooth",
+        "selection",
+        "verify"
+      ],
+      "teacher": {
+        "model": "meta-llama/Llama-3.2-3B",
+        "output": "runs/teacher_gsm8k_llama",
+        "lora": 32,
+        "lr": 0.0002,
+        "epochs": 3,
+        "batch_size": 4,
+        "accumulate": 4,
+        "warmup": 0.03
+      },
+      "store": {
+        "teacher": "runs/teacher_gsm8k_llama",
+        "tokenizer": "meta-llama/Llama-3.2-3B",
+        "output": "artifacts/store3b_gsm8k_llama",
+        "k_max": 50,
+        "batch_size": 4,
+        "position_chunk": 512,
+        "flush_batches": 40
+      },
+      "fold_selection": {
+        "store": "artifacts/store3b_gsm8k_llama.npz",
+        "meta": "artifacts/store3b_gsm8k_llama.meta.json",
+        "pool": "artifacts/subsets/split_B.json",
+        "tau": "coverage:0.297",
+        "folds": 5,
+        "fold_seed": 4242,
+        "fraction": 0.1,
+        "min_share": 0.015,
+        "stratify_by": "steps",
+        "scores": [
+          "gated_H",
+          "random",
+          "gated_H_low"
+        ],
+        "prefix": "foldLt"
+      }
+    }
+  ]
+}

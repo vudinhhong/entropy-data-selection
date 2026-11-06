@@ -1,0 +1,62 @@
+This repository contains code, selected index lists, teacher generations and
+per-run results for the paper "A teacher's predictive entropy separates
+fine-tuning data that repays training, but which end of it to take depends on
+the corpus".
+
+Copyright (c) 2026 Dinh-Hong Vu, Trong-Chi Duong, Anh-Cuong Le
+Natural Language Processing and Knowledge Discovery Research Group,
+Faculty of Information Technology, Ton Duc Thang University.
+
+
+WHAT IS COVERED BY WHICH LICENCE
+
+  code/ and figures/          MIT Licence, reproduced below.
+  data/                       Creative Commons Attribution 4.0 International
+                              (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/
+
+data/ holds per_run_accuracies.csv, the selected index lists in subsets/,
+the gate thresholds and the teacher generations. The index lists are integer
+indices into the public corpora named below; they contain no corpus text.
+
+
+UPSTREAM MATERIAL, NOT REDISTRIBUTED HERE
+
+Datasets. Each keeps its own licence and must be obtained from its source.
+  GSM8K                 MIT
+  MATH                  MIT
+  ECQA                  Community Data Licence Agreement -- Sharing 1.0
+  CommonsenseQA         MIT
+  Orca-Math (200k)      MIT
+  APE210K               see the dataset's own repository
+  Knights and Knaves    see the dataset's own repository
+Where a licence is listed above, it is the one the publisher states; users
+should confirm it at the source before redistributing.
+
+Models. Loaded from their publishers, not included here.
+  Qwen1.5-1.8B, Qwen2-1.5B, Qwen2.5, Qwen3-4B-Base   Apache-2.0
+  Llama-3.2-1B, Llama-3.2-3B                         Llama 3.2 Community Licence
+  SmolLM2-360M                                       Apache-2.0
+  Pythia-410M                                        Apache-2.0
+The Llama 3.2 Community Licence is not an OSI-approved open-source licence and
+carries its own conditions; see https://llama.com/llama3_2/license/.
+
+
+MIT LICENCE (code/ and figures/)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
