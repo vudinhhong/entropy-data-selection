@@ -2,10 +2,10 @@ cff-version: 1.2.0
 message: "If you use this code or data, please cite the paper."
 type: software
 title: "Corpus-dependent direction of teacher predictive entropy in fine-tuning data selection. Code and per-run results"
-version: "1.0.0"
-date-released: 2026-11-02
-# Uncomment once the Zenodo DOI is reserved:
-# doi: "10.5281/zenodo.XXXXXXX"
+version: "1.0.1"
+date-released: 2026-11-06
+# The concept DOI, which resolves to the latest version.
+doi: "10.5281/zenodo.24008262"
 authors:
   - family-names: Vu
     given-names: Dinh-Hong

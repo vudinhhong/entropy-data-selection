@@ -189,7 +189,9 @@ and the authors take full responsibility for the content.
 
 ## Citing
 
-Archive DOI: 10.5281/zenodo.XXXXXXX (filled in when the record is published).
+Archive DOI: [10.5281/zenodo.24008262](https://doi.org/10.5281/zenodo.24008262). That DOI covers every
+version and resolves to the most recent one; v1.0.0 on its own is
+10.5281/zenodo.24008263.
 
 See `CITATION.cff`. `code/` and `figures/` are MIT; `data/` is CC BY 4.0. The
 public datasets and models keep their own licences — see `LICENSE`, and note
